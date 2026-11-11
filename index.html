@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>عالم MOHAMED & NOURA الخاص ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff758f;
+            --gold: #d4af37;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg: #030303;
+            --glow-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+
+        /* تأثير الخلفية الفخم */
+        .hearts-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .heart-particle { position: absolute; color: var(--primary); opacity: 0.4; animation: fall linear infinite; filter: drop-shadow(0 0 5px var(--primary)); }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        /* --- الصفحة 1: الدخول --- */
+        #page-1 {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #2b0b14 0%, #030303 100%);
+            position: fixed; width: 100%; z-index: 9999; transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .login-card {
+            background: var(--glass); backdrop-filter: blur(25px); padding: 50px 30px;
+            border-radius: 40px; border: 1px solid var(--glass-border); text-align: center;
+            width: 90%; max-width: 400px; 
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.15); 
+            position: relative;
+        }
+        
+        .single-line-title {
+            white-space: nowrap; 
+            font-size: clamp(24px, 8vw, 35px); 
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* --- الصفحة 2: المحتوى الرئيسي --- */
+        #page-2 { display: none; opacity: 0; height: 100vh; overflow-y: auto; position: relative; z-index: 5; transition: 1s; }
+        .container { padding: 30px 20px; max-width: 500px; margin: 0 auto; }
+
+        .main-title { font-weight: 900; background: linear-gradient(45deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+
+        /* إضاءة ونبض الصور */
+        .glass-card {
+            background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; 
+            margin-bottom: 35px; overflow: hidden; opacity: 0; transform: translateY(40px); 
+            transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 15px rgba(255, 77, 109, 0.1); 
+        }
+        .glass-card.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+            animation: cardGlow 3s infinite alternate; 
+        }
+
+        @keyframes cardGlow {
+            from { box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 10px rgba(255, 77, 109, 0.1); }
+            to { box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 25px rgba(255, 77, 109, 0.3); }
+        }
+
+        .glass-card img { 
+            width: 100%; display: block; filter: brightness(0.9); transition: 0.5s; 
+            animation: imagePulse 5s infinite ease-in-out;
+        }
+        @keyframes imagePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* العداد */
+        .count-box { 
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); 
+            border: 1px solid var(--glass-border); padding: 20px 5px; border-radius: 25px; 
+            text-align: center; backdrop-filter: blur(15px); transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .count-box:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 0 20px rgba(255, 77, 109, 0.2); }
+        .count-num { font-size: 24px; font-weight: 800; display: block; color: var(--primary); text-shadow: 0 0 10px rgba(255,77,109,0.5); }
+        .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 30px 0; }
+
+        .notes-container { display: flex; overflow-x: auto; gap: 15px; padding: 20px 5px; scrollbar-width: none; }
+        .note-card { min-width: 150px; height: 150px; position: relative; transition: 0.8s; transform-style: preserve-3d; cursor: pointer; }
+        .note-card.flipped { transform: rotateY(180deg); }
+        .note-front, .note-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 30px; border: 1px solid var(--glass-border); }
+        .note-front { background: var(--glass); color: var(--gold); font-size: 30px; }
+        .note-back { background: var(--primary); transform: rotateY(180deg); font-size: 14px; font-weight: 600; text-align: center; color: white; }
+
+        .promises-section { margin: 40px 0; }
+        .promise-item { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 20px; border-radius: 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+        .promise-item:hover { background: rgba(255,77,109,0.1); border-color: var(--primary); transform: scale(1.02); }
+        .promise-item i { color: var(--gold); }
+
+        #page-3 { display: none; opacity: 0; position: fixed; inset: 0; z-index: 10000; background: #000; transition: 1.5s; overflow-y: auto; }
+        .secret-content { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; background: radial-gradient(circle at center, #3d0a18 0%, #000 100%); }
+        .floating-message { background: rgba(255,255,255,0.03); border: 1px solid var(--gold); padding: 45px 30px; border-radius: 50px; backdrop-filter: blur(40px); box-shadow: 0 0 60px rgba(212, 175, 55, 0.15); max-width: 380px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .btn-style { background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; border: none; padding: 18px 30px; border-radius: 20px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; box-shadow: 0 10px 20px rgba(255,77,109,0.3); }
+        .btn-style:hover { transform: scale(1.05); box-shadow: 0 15px 25px rgba(255,77,109,0.5); }
+        .btn-outline { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 15px 35px; border-radius: 50px; cursor: pointer; margin-top: 30px; font-weight: 600; transition: 0.3s; }
+
+        .music-bar { background: var(--glass); padding: 18px; border-radius: 30px; border: 1px solid var(--glass-border); display: flex; align-items: center; gap: 15px; margin: 25px 0; backdrop-filter: blur(20px); }
+        .play-icon { width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--primary); cursor: pointer; }
+
+        .opening-letter{margin:12px 0 28px;padding:24px 22px;border-radius:28px;background:linear-gradient(145deg,rgba(255,77,109,.14),rgba(255,255,255,.025));border:1px solid rgba(212,175,55,.45);box-shadow:0 12px 35px rgba(0,0,0,.25),0 0 22px rgba(255,77,109,.1);line-height:2;font-size:15px;color:#fff;text-align:center}
+        .letter-kicker,.final-kicker{color:var(--gold);font-weight:800;letter-spacing:1px;margin-bottom:12px;display:block}
+        .final-letter{white-space:pre-line;text-align:right;line-height:2.05;font-size:14px;color:#f7edf0}
+        .heartlink-credit{text-align:center;padding:24px 12px 40px;color:rgba(255,255,255,.58);font-size:12px}
+        .heartlink-credit strong{color:var(--gold)}
+
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <section id="page-1">
+        <div class="login-card animate__animated animate__zoomIn">
+            <h1 class="main-title single-line-title" style="-webkit-text-fill-color: initial; color: #fff;">MOHAMED & NOURA</h1>
+            <p style="opacity:0.6; font-size:12px; margin-bottom:35px; letter-spacing: 2px;">OUR ETERNAL LOVE STORY ✨</p>
+            
+            <input type="password" id="passInput" inputmode="numeric" autocomplete="off" placeholder="اكتبي كلمة السر ❤️" style="width:100%; background:rgba(255,255,255,0.07); border:1px solid var(--glass-border); padding:18px; border-radius:20px; color:#fff; text-align:center; margin-bottom:25px; outline:none; font-size: 16px;">
+            
+            <button class="btn-style" onclick="goToPage2()">دوسي هنا😂</button>
+        </div>
+    </section>
+
+    <section id="page-2">
+        <div class="container">
+            <header style="text-align:center; padding:50px 0;">
+                <h2 class="main-title">حكايتنا ❤️</h2>
+                <p style="opacity:0.8; margin-top:10px;">كل لحظة معاكي هي عمر جديد</p>
+            </header>
+
+
+            <div class="opening-letter">
+                <span class="letter-kicker">رسالة ليكي يا يننوشتي ❤️</span>
+                أنا مش مستني منك تكوني مثالية، ولا مستني منك تفضلي مبسوطة طول الوقت. أنا بحب تفاصيلك زي ما هي، وبحب أشوفك على طبيعتك. مش لازم تتكلمي كل يوم، ولا لازم تردي على كل حاجة، المهم تكوني مرتاحة وبخير. ❤️
+            </div>
+
+            <div style="text-align:center; color:var(--gold); font-size:13px; letter-spacing:2px; font-weight:700;">قصتنا من يوم 30/5/2025 ❤️</div>
+            <div class="counter-grid">
+                <div class="count-box"><span id="years" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">سنة</span></div>
+                <div class="count-box"><span id="months" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">شهر</span></div>
+                <div class="count-box"><span id="days" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">يوم</span></div>
+                <div class="count-box"><span id="hours" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">ساعة</span></div>
+                <div class="count-box"><span id="mins" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">دقيقة</span></div>
+                <div class="count-box"><span id="secs" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">ثانية</span></div>
+            </div>
+
+            <div class="music-bar">
+                <div class="play-icon" onclick="toggleMusic()"><i id="pIcon" class="fa-solid fa-play"></i></div>
+                <div style="flex:1">
+                    <div style="font-size:15px; font-weight:700;">نور عيني</div>
+                    <div style="font-size:11px; opacity:0.5;">الأغنية اللي بتوصفنا 🎵</div>
+                </div>
+                <audio id="loveSong" loop src="https://files.catbox.moe/ll4n4b.mp3"></audio>
+            </div>
+
+            <div class="promises-section">
+                <div class="promise-item"><i class="fa-solid fa-hand-holding-heart"></i><span>هفضل دايماً موجود عشانك ❤️</span></div>
+                <div class="promise-item"><i class="fa-solid fa-heart"></i><span>أنتي أملي فالحياة اللي عايش علشانه</span></div>
+                <div class="promise-item"><i class="fa-solid fa-face-smile"></i><span>اضحكي دايماً، ويارب أكون سبب فالضحكة دي</span></div>
+                <div class="promise-item"><i class="fa-solid fa-star"></i><span>بحبك يننوشتي ❤️</span></div>
+                <div class="promise-item"><i class="fa-solid fa-infinity"></i><span>في ناس بنفتكرها، وفي ناس بتفضل عايشة جوانا مهما بعدت.</span></div>
+                <div class="promise-item"><i class="fa-solid fa-gift"></i><span>نفسي أشوفك بتحققي كل أحلامك وأكون أول واحد يفرحلك.</span></div>
+                <div class="promise-item"><i class="fa-solid fa-heart"></i><span>لو رجع بيا الزمن، عمري ما كنت هقول كلمة تضايقك مني أو تخليكي تفكري في أي حاجة وحشة... سامحيني.</span></div>
+                <div class="promise-item"><i class="fa-solid fa-sun"></i><span>إنتي أجمل حاجة حصلتلي، وإنتي النور اللي بيرشدني ليكي.</span></div>
+                <div class="promise-item"><i class="fa-solid fa-shield-heart"></i><span>هفضل سندك دايماً، اضحكي دايماً.</span></div>
+                <div class="promise-item"><i class="fa-solid fa-infinity"></i><span>حبنا ملهوش نهاية.. وعد ❤️</span></div>
+            </div>
+
+            <div class="notes-container">
+                <div class="note-card" onclick="this.classList.toggle('flipped')"><div class="note-front"><i class="fa-solid fa-envelope"></i></div><div class="note-back">إنتي أجمل حاجة حصلتلي ❤️</div></div>
+                <div class="note-card" onclick="this.classList.toggle('flipped')"><div class="note-front"><i class="fa-solid fa-star"></i></div><div class="note-back">نفسي أشوفك بتحققي كل أحلامك ✨</div></div>
+                <div class="note-card" onclick="this.classList.toggle('flipped')"><div class="note-front"><i class="fa-solid fa-crown"></i></div><div class="note-back">هفضل سندك دايماً يا يننوشتي ❤️</div></div>
+            </div>
+
+            <div class="gallery">
+                <div class="glass-card"><img src="https://wsrv.nl/?url=files.catbox.moe/a9rnlc.jpg" data-heartlink-original="https://files.catbox.moe/a9rnlc.jpg" alt="صورة من ذكرياتنا"><div style="padding:20px; text-align:center; font-weight: 600;">أحلى صدفة في عمري ❤️</div></div>
+                <div class="glass-card"><img src="https://wsrv.nl/?url=files.catbox.moe/xqbj7c.jpg" data-heartlink-original="https://files.catbox.moe/xqbj7c.jpg" alt="صورة من ذكرياتنا"><div style="padding:20px; text-align:center; font-weight: 600;">ضحكتك هي حياتي ✨</div></div>
+                <div class="glass-card"><img src="https://wsrv.nl/?url=files.catbox.moe/wf2909.jpg" data-heartlink-original="https://files.catbox.moe/wf2909.jpg" alt="صورة من ذكرياتنا"><div style="padding:20px; text-align:center; font-weight: 600;">عالمي الخاص بيكي</div></div>
+                <div class="glass-card"><img src="https://wsrv.nl/?url=files.catbox.moe/1prbre.jpg" data-heartlink-original="https://files.catbox.moe/1prbre.jpg" alt="صورة من ذكرياتنا"><div style="padding:20px; text-align:center; font-weight: 600;">بموت فيكي يا حبيبة 💍</div></div>
+            </div>
+
+            <div style="text-align:center; padding-bottom:100px;">
+                <button class="btn-outline" onclick="goToPage3()">في حاجة أخيرة ليكي.. 🎁</button>
+            </div>
+            <div class="heartlink-credit">Made with ❤️ by <strong>HeartLink</strong></div>
+        </div>
+    </section>
+
+    <section id="page-3">
+        <div class="secret-content">
+            <div class="floating-message animate__animated animate__fadeInUp" style="max-width:460px;width:100%;">
+                <i class="fa-solid fa-heart" style="color:var(--primary);font-size:45px;margin-bottom:25px;filter:drop-shadow(0 0 10px var(--primary));"></i>
+                <span class="final-kicker">قبل ما تقفلي الصفحة يننوشتي</span>
+                <h2 style="color:#fff;margin-bottom:20px;font-size:28px;">وحشتيني أوي يا يننوشتي... ❤️</h2>
+                <div class="final-letter">يمكن السبب الوحيد اللي مخليني مكمل وبحاول كل يوم إني عارف إن فيه حد نفسي أكون أحسن عشانه... إنتي السبب اللي بيخليني أقول لنفسي: لازم تكمل، لازم تقوم وتحاول وتحارب، ولازم توصل لكل اللي نفسك فيه.
+
+إنتي واخدة تفكيري طول اليوم، وببقى نفسي أعرف أي حاجة عنك في أي وقت، أطمن عليكي، أعرف أخبارك، وأعرف إنتي عاملة إيه.
+
+بحبك أوي يا يننوشتي ❤️
+وعاوزك تضحكي دايمًا، وتفضلي مبسوطة، ويا رب أكون سبب في الضحكة دي ولو مرة.
+
+إنتي كنتي وما زلتي سبب في حاجات كتير عديتها، ودافع لحاجات كتير نفسي أوصلها. إني أشكرك من هنا لآخر عمري مش كفاية.
+
+ربنا يحفظك من كل حاجة، ويبعد عنك أي زعل، ويكتبلك الخير في كل خطوة. ربنا يجمعني بيكي على خير ويجعلك خير ليا يا رب.
+
+إنتي أحلى حاجة حصلتلي، وأحلى صدفة في حياتي.
+يمكن أنا أتغير، وكل حاجة فيا تتغير، إلا نظرتي ليكي... عمري ما هنسى أي وعد وعدته، وعمري ما هنساكي. مستحيل تبقي مجرد حد دخل حياتي وخرج وراح شاف حياته... إنتي ليكي مكانة مختلفة عندي، ومهما عدى وقت مش هقدر أعتبرك مجرد ذكرى.
+
+عمري ما هبطل أحبك يا يننوشتي، وعمري ما هبطل أهتم بيكي وأتمنى أشوفك بخير.
+
+وحشتيني وبتوحشيني كل ثانية... والله مش بتغيبي عن بالي، إنتي محفورة في قلبي على طول. نفسي أشوفك مبسوطة، وفي الحاجة اللي بتحبيها، وتحققي كل اللي نفسك فيه.
+
+بقيت لما أجي أصلي أدعيلك من غير ما أفكر، أو اتعودت بمعنى أصح... بدعيلك كتير، ويمكن أكتر من نفسي والله. ربنا يريح قلبك ويطمنك ويحققلك كل اللي بتتمنيه.
+
+الموضوع بيبقى سهل ساعة ما نقول مش هنتكلم تاني وخلاص ومش عارف إيه... بس بعدها بيبقى من أصعب الحاجات في يومي إني أمنع نفسي من إني أطمن عليكي، أو أعرف أي حاجة عنك. بحاول أحترم الظروف، وبحاول أتمسك باللي يخليني مطمن إنك بخير.
+
+أجيبلك إيه وأنا جاي غير البامبز والعيش الفينو؟ 😂❤️
+
+نفسك في إيه يا يننوشتي؟ يا روحي يا قلبي يا عقلي؟ ❤️🫠
+
+مش عاوزك تردي على الرسالة دي، وسامحيني لو إنتي بتقريها...
+
+بس ينفع تضحكي؟ 🥺
+يلا دلوقتي عشان خاطري!
+
+يخلاااااااثي عسللل 👀💘📷
+
+طول ما إنتي مبسوطة وكويسة، أنا هبقى فرحان ومطمن عليكي والله. ونفسي مفيش حاجة تقدر تطفي ضحكتك أو تعكر صفو أيامك.
+
+ولو لفيت الدنيا دي كلها مش هلاقي زيك يا غزال... مش هلاقي حد بيستحمل برودي قدك، ولا عصبيتي، ولا غبائي، ولا هبلي 😂❤️
+
+وفي الآخر، أنا آسف عن أي حاجة خلتك تفكري في أي حاجة من اللي فكرتي فيها بسبب كلامي، أو أي تصرف مني ضايقك.
+
+آسف يا يننوشتي والله... سامحيني.
+
+بحبك يا يننوشتي، ووحشتيني أوي. ❤️</div>
+                <div style="margin-top:25px;font-weight:900;color:var(--gold);font-size:20px;">بحبك يا يننوشتي.. للأبد ❤️</div>
+                <button onclick="location.reload()" style="background:none;border:none;color:var(--primary);margin-top:35px;font-size:13px;text-decoration:underline;cursor:pointer;font-weight:600;">العودة للبداية</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function goToPage2() {
+            if(document.getElementById('passInput').value.trim() === "2822010") {
+                document.getElementById('page-1').style.transform = 'translateY(-100%) scale(0.9)';
+                document.getElementById('page-1').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('page-1').style.display = 'none';
+                    document.getElementById('page-2').style.display = 'block';
+                    document.body.style.overflow = 'auto';
+                    setTimeout(() => { 
+                        document.getElementById('page-2').style.opacity = '1'; 
+                        checkScroll(); 
+                    }, 50);
+                    startCounter();
+                    toggleMusic();
+                    createHearts();
+                }, 800);
+            } else { 
+                const btn = document.querySelector('.btn-style');
+                btn.innerHTML = "ركزي يا حبيبتي😂";
+                setTimeout(() => { btn.innerHTML = "دوسي هنا😂"; }, 2000);
+            }
+        }
+
+        function goToPage3() {
+            document.getElementById('page-3').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            window.scrollTo(0,0);
+            setTimeout(() => { document.getElementById('page-3').style.opacity = '1'; }, 50);
+        }
+
+
+        function addCalendarMonths(date, months) {
+            const d = new Date(date), day = d.getDate();
+            d.setDate(1); d.setMonth(d.getMonth() + months);
+            d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()));
+            return d;
+        }
+        function getElapsedParts(start, now) {
+            let years = now.getFullYear() - start.getFullYear();
+            let anchor = new Date(start); anchor.setFullYear(start.getFullYear() + years);
+            if (anchor > now) { years--; anchor = new Date(start); anchor.setFullYear(start.getFullYear() + years); }
+            let months = (now.getFullYear() - anchor.getFullYear()) * 12 + now.getMonth() - anchor.getMonth();
+            let monthAnchor = addCalendarMonths(anchor, months);
+            if (monthAnchor > now) { months--; monthAnchor = addCalendarMonths(anchor, months); }
+            let rem = Math.max(0, now - monthAnchor);
+            const days = Math.floor(rem / 86400000); rem %= 86400000;
+            const hours = Math.floor(rem / 3600000); rem %= 3600000;
+            const mins = Math.floor(rem / 60000); rem %= 60000;
+            const secs = Math.floor(rem / 1000);
+            return {years, months, days, hours, mins, secs};
+        }
+        function startCounter() {
+            const start = new Date(2025, 4, 30, 0, 0, 0);
+            function update() {
+                const p = getElapsedParts(start, new Date());
+                ['years','months','days','hours','mins','secs'].forEach(id => document.getElementById(id).innerText = p[id]);
+            }
+            update(); setInterval(update, 1000);
+        }
+
+        function toggleMusic() {
+            const a = document.getElementById('loveSong');
+            const i = document.getElementById('pIcon');
+            if(a.paused) { a.play(); i.className = 'fa-solid fa-pause'; }
+            else { a.pause(); i.className = 'fa-solid fa-play'; }
+        }
+
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            setInterval(() => {
+                const heart = document.createElement('i');
+                const isStar = Math.random() > 0.8;
+                heart.className = isStar ? 'fa-solid fa-star heart-particle' : 'fa-solid fa-heart heart-particle';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 300);
+        }
+
+        function checkScroll() {
+            document.querySelectorAll('.glass-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if(rect.top < window.innerHeight - 50) {
+                    card.classList.add('show');
+                }
+            });
+        }
+
+        document.getElementById('page-2').onscroll = checkScroll;
+
+        document.querySelectorAll('.gallery img[data-heartlink-original]').forEach(img => {
+            img.addEventListener('error', function () {
+                const original = this.dataset.heartlinkOriginal;
+                if (!this.dataset.fallbackTried) {
+                    this.dataset.fallbackTried = '1';
+                    const u = new URL(original);
+                    this.src = 'https://i0.wp.com/' + u.host + u.pathname + u.search;
+                } else if (this.dataset.fallbackTried === '1') {
+                    this.dataset.fallbackTried = '2';
+                    this.src = original;
+                }
+            });
+            img.removeAttribute('loading');
+            img.setAttribute('decoding','async');
+            img.style.webkitTransform = 'translateZ(0)';
+        });
+
+    </script>
+
+    <script>window.HEARTLINK_GIFT_ID = "gift-mohamed-noura-30052025";</script>
+    <script src="https://cdn.jsdelivr.net/gh/HeartLink349/Heart_Link@a665165/heartlink-lock.js"></script>
+</body>
+</html>
